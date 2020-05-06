@@ -26,8 +26,8 @@
  * @file ssd1306_hal/template/io.h This is template file for new platform with detailed instructions
  */
 
-#ifndef _SSD1306_YOUR_PLATFORM_IO_H_
-#define _SSD1306_YOUR_PLATFORM_IO_H_
+#ifndef _SSD1306_PLATFORM_IO_H_
+#define _SSD1306_PLATFORM_IO_H_
 
 //========================== I. Create directory for your platform ========
 /* 1. Copy content of this folder to src/ssd1306_hal/<your_platform>/ folder   */
@@ -37,7 +37,7 @@
 /* 4. Add platform.c file to SOURCES list in src/Makefile.src                  */
 /* 5. Implement functions below and functions in platform.c file               */
 
-#define YOUR_PLATFORM
+#define SSD1306_HDSC_PLATFORM
 //========================== I. Include libraries =========================
 /* 1. Include all required headers, specific for your platform here */
 #include <stdint.h>
@@ -62,8 +62,8 @@
 //#define CONFIG_AVR_SPI_AVAILABLE
 //#define CONFIG_AVR_UART_AVAILABLE
 //#define CONFIG_VGA_AVAILABLE
-//#define CONFIG_PLATFORM_I2C_AVAILABLE
-//#define CONFIG_PLATFORM_SPI_AVAILABLE
+// #define CONFIG_PLATFORM_I2C_AVAILABLE
+#define CONFIG_PLATFORM_SPI_AVAILABLE
 
 #ifdef __cplusplus
 extern "C" {
@@ -92,22 +92,20 @@ static inline int  analogRead(int pin)    // analogRead()
     return 0;
 }
 
-static inline uint32_t millis(void)       // millis()
-{
-    return 0;
-}
+uint32_t millis(void);       // millis()
+uint32_t micros(void);       // micros()
 
-static inline uint32_t micros(void)       // micros()
-{
-    return 0;
-};
+extern void delay1ms(uint32_t);
+extern void delay1us(uint32_t);
 
 static inline void delay(uint32_t ms)     // delay()
 {
+    delay1ms(ms);
 }
 
 static inline void delayMicroseconds(uint32_t us)  // delayMicroseconds()
 {
+    delay1us(us);
 }
 
 // !!!  OPTIONAL !!!
@@ -139,20 +137,6 @@ static inline char *utoa(unsigned int num, char *str, int radix)    // util utoa
     return str;
 }
 
-
-// !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
-#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cConfig_t * cfg);
-#endif
-
-
-// !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
-#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
-void ssd1306_platform_spiInit(uint8_t busId,
-                              uint8_t cesPin,
-                              uint8_t dcPin);
-#endif
-
 #ifdef __cplusplus
 }
 #endif
@@ -169,5 +153,5 @@ static inline int random(int min, int max)  // random(a,b) - can be skipped if y
 }
 #endif
 
-#endif
+#endif  //_SSD1306_PLATFORM_IO_H_
 

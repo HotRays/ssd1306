@@ -26,7 +26,9 @@
 
 // TODO: DON'T FORGET ADD YOUR PLATFORM FILE TO MAKEFILE
 
-#if defined(YOUR_PLATFORM)
+#if defined(SSD1306_HDSC_PLATFORM)
+
+#include "app_i2c.h"
 
 #include "intf/ssd1306_interface.h"
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -36,27 +38,27 @@ static uint8_t s_i2c_addr = 0x3C;
 
 static void platform_i2c_start(void)
 {
-    // ... Open i2c channel for your device with specific s_i2c_addr
+    app_i2c_start();
 }
 
 static void platform_i2c_stop(void)
 {
-    // ... Complete i2c communication
+    app_i2c_stop();
 }
 
 static void platform_i2c_send(uint8_t data)
 {
-    // ... Send byte to i2c communication channel
+    app_i2c_write_data(s_i2c_addr, data, 1);
 }
 
 static void platform_i2c_close(void)
 {
-    // ... free all i2c resources here
+    ///< FIXME: --- 
 }
 
 static void platform_i2c_send_buffer(const uint8_t *data, uint16_t len)
 {
-    // ... Send len bytes to i2c communication channel here
+    app_i2c_write_data(s_i2c_addr, data, len);
 }
 
 void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cConfig_t * cfg)
@@ -77,31 +79,50 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cCo
 // !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
 
+#include "app_spi.h"
+
 #include "intf/spi/ssd1306_spi.h"
+
+uint32_t millis(void)       // millis()
+{
+    static uint32_t counter = 0;
+    return counter ++;
+}
+
+uint32_t micros(void)       // micros()
+{
+    static uint32_t counter = 0;
+    return counter;
+};
 
 static void platform_spi_start(void)
 {
     // ... Open spi channel for your device with specific s_ssd1306_cs, s_ssd1306_dc
+    plat_spi_start();
 }
 
 static void platform_spi_stop(void)
 {
     // ... Complete spi communication
+    plat_spi_stop();
 }
 
 static void platform_spi_send(uint8_t data)
 {
     // ... Send byte to spi communication channel
+    plat_spi_xmit(&data, 1);
 }
 
 static void platform_spi_close(void)
 {
     // ... free all spi resources here
+    plat_spi_deinit();
 }
 
 static void platform_spi_send_buffer(const uint8_t *data, uint16_t len)
 {
     // ... Send len bytes to spi communication channel here
+    plat_spi_xmit(data, len);
 }
 
 void ssd1306_platform_spiInit(int8_t busId,
@@ -117,8 +138,9 @@ void ssd1306_platform_spiInit(int8_t busId,
     ssd1306_intf.close = &platform_spi_close;
     ssd1306_intf.send_buffer = &platform_spi_send_buffer;
     // init your interface here
-    //...
+    
+    
 }
 #endif
 
-#endif // YOUR_PLATFORM
+#endif // SSD1306_HDSC_PLATFORM

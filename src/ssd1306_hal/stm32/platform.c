@@ -127,4 +127,4 @@ void ssd1306_platform_spiInit(int8_t busId,
 }
 #endif
 
-#endif // YOUR_PLATFORM
+#endif // SSD1306_HDSC_PLATFORM

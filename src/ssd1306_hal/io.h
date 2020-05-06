@@ -52,7 +52,7 @@
 #elif defined(__MINGW32__)
 #include "mingw/io.h"
 #else
-#warning "Platform is not supported. Use template to add support"
+//#warning "Platform is not supported. Use template to add support"
 #include "template/io.h"
 #endif
 

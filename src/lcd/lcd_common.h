@@ -91,10 +91,10 @@ typedef struct
     lcd_type_t type;
 
     /** Current display width */
-    lcduint_t  width;
+    lcdint_t  width;
 
     /** Current display height */
-    lcduint_t  height;
+    lcdint_t  height;
 
     /**
      * @brief Sets block in RAM of lcd display controller to write data to.

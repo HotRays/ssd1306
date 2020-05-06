@@ -85,79 +85,12 @@ public:
      */
     static bool notPressed(uint8_t buttons);
 
-    /**
-     * @brief Returns bits of all pressed buttons
-     *
-     * Returns bits of all pressed buttons. For example, to check if Down button is pressed
-     * you need to write `if (result & BUTTON_DOWN) {}`. Available constants are:
-     * BUTTON_DOWN, BUTTON_LEFT, BUTTON_RIGHT, BUTTON_UP, BUTTON_A, BUTTON_B.
-     *
-     */
-    static uint8_t buttonsState()
-    {
-        return m_onButtons();
-    }
-
-    /**
-     * Configures NanoEngine8 to use custom key handler.
-     * You can implement in your handler any keyboard layout, you use in your schematics.
-     */
-    static void connectCustomKeys(TNanoEngineGetButtons handler);
-
-    /**
-     * @brief Enables engine to use Z-Keypad.
-     * Enables engine to use Z-Keypad. Please refer to arkanoid example for schematics.
-     * @param analogPin - pin, which Z-Keypad is connected to.
-     */
-    static void connectZKeypad(uint8_t analogPin);
-
-    /**
-     * @brief Configures NanoEngine8 to use Arduboy keys layout.
-     * Configures NanoEngine8 to use Arduboy keys layout.
-     */
-    static void connectArduboyKeys();
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    /**
-     * @brief Configures NanoEngine to use KY40 Rotary Encoder.
-     * Configures NanoEngine to use KY40 Rotary Encoder.
-     * @param pina_clk pin number to use as clk (see KY40 docs).
-     * @param pinb_dt pin number to use as direction pin (see KY40 docs).
-     * @param pinc_sw optional pin number ot use as push button.
-     * @warning do not use, not tested
-     */
-    static void connectKY40encoder(uint8_t pina_clk, uint8_t pinb_dt, int8_t pinc_sw = -1);
-#endif
-
-    /**
-     * @brief Enables engine to use GPIO keys
-     *
-     * Enables engine  to use gpio-keys. You need to pass globally defined array,
-     * containing GPIO pin numbers for the 6 buttons in the following order:
-     * Down, Left, Right, Up, A, B. If you don't want to use some specific button,
-     * then just set not used button to 0.
-     * Once you call this function, you can read buttons state via buttonsState().
-     *
-     * @param gpioKeys pointer to 6-button pins array.
-     *
-     * @see buttonsState()
-     */
-    static void connectGpioKeypad(const uint8_t *gpioKeys);
 
 protected:
     /** Callback to call if buttons state needs to be updated */
     static TNanoEngineGetButtons m_onButtons;
 
 private:
-    static uint8_t s_zkeypadPin;
-    static const uint8_t * s_gpioKeypadPins;
-    static uint8_t s_ky40_clk;
-    static uint8_t s_ky40_dt;
-    static uint8_t s_ky40_sw;
-    static uint8_t zkeypadButtons();
-    static uint8_t arduboyButtons();
-    static uint8_t gpioButtons();
-    static uint8_t ky40Buttons();
 };
 
 
