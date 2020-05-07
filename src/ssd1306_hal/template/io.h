@@ -79,10 +79,6 @@ static inline int  digitalRead(int pin)   // digitalRead()
     return LOW;
 }
 
-static inline void digitalWrite(int pin, int level)  // digitalWrite()
-{
-}
-
 static inline void pinMode(int pin, int mode) // pinMode()
 {
 }
@@ -97,6 +93,7 @@ uint32_t micros(void);       // micros()
 
 extern void delay1ms(uint32_t);
 extern void delay1us(uint32_t);
+extern void digitalWrite(int pin, int level);
 
 static inline void delay(uint32_t ms)     // delay()
 {

@@ -80,20 +80,31 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cCo
 #if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
 
 #include "app_spi.h"
-
 #include "intf/spi/ssd1306_spi.h"
 
 uint32_t millis(void)       // millis()
 {
+    ///< FIXME: 偷懒的处理
     static uint32_t counter = 0;
     return counter ++;
 }
 
 uint32_t micros(void)       // micros()
 {
+    ///< FIXME: ...
     static uint32_t counter = 0;
     return counter;
 };
+
+void digitalWrite(int pin, int level)  // digitalWrite()
+{
+    if(level) {
+        // DCS
+        plat_set_DCS();
+    } else {
+        plat_clr_DCS();
+    }
+}
 
 static void platform_spi_start(void)
 {
