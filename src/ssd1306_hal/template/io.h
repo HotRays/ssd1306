@@ -134,19 +134,9 @@ static inline char *utoa(unsigned int num, char *str, int radix)    // util utoa
     return str;
 }
 
-#ifdef __cplusplus
-}
-#endif
+extern int random(int min, int max);  // random(a,b) - can be skipped if you don't use it
 
 #ifdef __cplusplus
-static inline int random(int max)   // random(n) - can be skipped if you don't use it
-{
-    return 0;
-}
-
-static inline int random(int min, int max)  // random(a,b) - can be skipped if you don't use it
-{
-    return 0;
 }
 #endif
 

@@ -85,12 +85,17 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cCo
 
 uint32_t millis(void)       // millis()
 {
-    return jffies_to_mic();
+    return jffies_to_msc();
 }
 
 uint32_t micros(void)       // micros()
 {
-    return jffies_to_msc();
+    return jffies_to_mic();
+}
+
+int random(int min, int max)  // random(a,b) - can be skipped if you don't use it
+{
+    return (min + (Rng_GetData1() % (max - min)));
 }
 
 void digitalWrite(int pin, int level)  // digitalWrite()
